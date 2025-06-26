@@ -1,4 +1,4 @@
-prompt ,completion
+prompt,completion
 "SCHEMA:
 TABLE pos_order(id, date_order)
 TABLE pos_order_line(id, order_id, product_id, qty)
