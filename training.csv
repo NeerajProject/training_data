@@ -1,5 +1,18 @@
 prompt,completion
-Show me the top-selling products in the last 30 days.,"SELECT pt.name, SUM(pol.qty) AS total_sold
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show me the top-selling products in the last 30 days.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT pt.name, SUM(pol.qty) AS total_sold
 FROM pos_order_line pol
 JOIN pos_order po ON pol.order_id = po.id
 JOIN product_product pp ON pol.product_id = pp.id
@@ -8,71 +21,292 @@ WHERE po.date_order >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY pt.name
 ORDER BY total_sold DESC
 LIMIT 10;"
-What was the total sales revenue generated last week?,"SELECT SUM(amount_total) AS total_revenue
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+What was the total sales revenue generated last week?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT SUM(amount_total) AS total_revenue
 FROM pos_order
 WHERE date_order >= CURRENT_DATE - INTERVAL '7 days';"
-List all orders placed today with their total amounts.,"SELECT id, name, amount_total
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+List all orders placed today with their total amounts.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT id, name, amount_total
 FROM pos_order
 WHERE DATE(date_order) = CURRENT_DATE;"
-Which cashier/user processed the highest number of POS orders this month?,"SELECT cashier, COUNT(*) AS total_orders
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which cashier/user processed the highest number of POS orders this month?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT cashier, COUNT(*) AS total_orders
 FROM pos_order
 WHERE date_order >= DATE_TRUNC('month', CURRENT_DATE)
 GROUP BY cashier
 ORDER BY total_orders DESC
 LIMIT 1;"
-Give me the average basket size by customer this quarter.,"SELECT partner_id, AVG(amount_total) AS avg_basket_size
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Give me the average basket size by customer this quarter.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, AVG(amount_total) AS avg_basket_size
 FROM pos_order
 WHERE date_order >= DATE_TRUNC('quarter', CURRENT_DATE)
 GROUP BY partner_id;"
-Show orders where discount applied was more than 20%.,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show orders where discount applied was more than 20%.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM pos_order_line
 WHERE discount > 20;"
-List all cancelled POS orders in the last 7 days.,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+List all cancelled POS orders in the last 7 days.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM pos_order
 WHERE state = 'cancel' AND date_order >= CURRENT_DATE - INTERVAL '7 days';"
-Which product has the highest return/refund rate?,"SELECT product_id, 
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which product has the highest return/refund rate?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT product_id, 
        SUM(CASE WHEN refunded_orderline_id IS NOT NULL THEN 1 ELSE 0 END)::FLOAT / COUNT(*) AS return_rate
 FROM pos_order_line
 GROUP BY product_id
 ORDER BY return_rate DESC
 LIMIT 1;"
-Show me all orders processed by John Doe between June 1 and June 15.,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show me all orders processed by John Doe between June 1 and June 15.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM pos_order
 WHERE cashier = 'John Doe' AND date_order BETWEEN '2025-06-01' AND '2025-06-15';"
-"Give me a breakdown of sales by payment method (cash, card, etc.).","SELECT payment_method, SUM(amount_total) AS total_sales
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Give me a breakdown of sales by payment method (cash, card, etc.).
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT payment_method, SUM(amount_total) AS total_sales
 FROM pos_order
 GROUP BY payment_method;"
-Who are the top 10 customers by total purchases?,"SELECT partner_id, SUM(amount_total) AS total_purchase
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Who are the top 10 customers by total purchases?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, SUM(amount_total) AS total_purchase
 FROM pos_order
 GROUP BY partner_id
 ORDER BY total_purchase DESC
 LIMIT 10;"
-Show me new customers registered this month.,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show me new customers registered this month.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM res_partner
 WHERE DATE(date) >= DATE_TRUNC('month', CURRENT_DATE);"
-Which customers haven’t purchased anything in the last 90 days?,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which customers haven’t purchased anything in the last 90 days?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM res_partner
 WHERE id NOT IN (
     SELECT DISTINCT partner_id
     FROM pos_order
     WHERE date_order >= CURRENT_DATE - INTERVAL '90 days'
 );"
-List customers who bought product X more than once.,"SELECT partner_id, product_id, COUNT(*) AS purchase_count
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+List customers who bought product X more than once.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, product_id, COUNT(*) AS purchase_count
 FROM pos_order_line
 GROUP BY partner_id, product_id
 HAVING COUNT(*) > 1;"
-Give me contact details of all VIP customers.,"SELECT name, email, phone
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Give me contact details of all VIP customers.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT name, email, phone
 FROM res_partner
 WHERE customer_rank > 0 AND comment ILIKE '%VIP%';"
-How many customers were added by User Sarah?,"SELECT COUNT(*) 
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+How many customers were added by User Sarah?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT COUNT(*) 
 FROM res_partner
 WHERE user_id = (SELECT id FROM res_users WHERE login ILIKE '%Sarah%');"
-Which customers visited more than 3 times this week?,"SELECT partner_id, COUNT(*) AS visits
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which customers visited more than 3 times this week?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, COUNT(*) AS visits
 FROM pos_order
 WHERE date_order >= CURRENT_DATE - INTERVAL '7 days'
 GROUP BY partner_id
 HAVING COUNT(*) > 3;"
-Find customers who only shop on weekends.,"SELECT partner_id, COUNT(*) AS weekend_visits
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Find customers who only shop on weekends.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, COUNT(*) AS weekend_visits
 FROM pos_order
 WHERE EXTRACT(DOW FROM date_order) IN (0, 6)
 GROUP BY partner_id
@@ -81,50 +315,193 @@ HAVING COUNT(*) = (
     FROM pos_order po2 
     WHERE po2.partner_id = pos_order.partner_id
 );"
-List all customers who gave negative feedback or complaints.,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+List all customers who gave negative feedback or complaints.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM res_partner
 WHERE comment ILIKE '%complaint%' OR comment ILIKE '%negative%';"
-Show customers who have an average ticket size above $500.,"SELECT partner_id, AVG(amount_total) AS avg_ticket_size
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show customers who have an average ticket size above $500.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT partner_id, AVG(amount_total) AS avg_ticket_size
 FROM pos_order
 GROUP BY partner_id
 HAVING AVG(amount_total) > 500;"
-Rank users by total sales they made this month.,"SELECT user_id, SUM(amount_total) AS total_sales
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Rank users by total sales they made this month.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, SUM(amount_total) AS total_sales
 FROM pos_order
 WHERE date_order >= DATE_TRUNC('month', CURRENT_DATE)
 GROUP BY user_id
 ORDER BY total_sales DESC;"
-Which users haven’t logged in for over a week?,"SELECT *
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which users haven’t logged in for over a week?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT *
 FROM res_users
 WHERE last_login < CURRENT_DATE - INTERVAL '7 days';"
-Show which user created the most new customer profiles.,"SELECT user_id, COUNT(*) AS new_customers
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show which user created the most new customer profiles.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, COUNT(*) AS new_customers
 FROM res_partner
 WHERE date >= DATE_TRUNC('month', CURRENT_DATE)
 GROUP BY user_id
 ORDER BY new_customers DESC
 LIMIT 1;"
-Find users with the highest average sale value per order.,"SELECT user_id, AVG(amount_total) AS avg_order_value
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Find users with the highest average sale value per order.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, AVG(amount_total) AS avg_order_value
 FROM pos_order
 GROUP BY user_id
 ORDER BY avg_order_value DESC
 LIMIT 5;"
-Display shift-wise sales performance for each user.,"SELECT user_id, TO_CHAR(date_order, 'HH24') AS hour, SUM(amount_total) AS sales
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Display shift-wise sales performance for each user.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, TO_CHAR(date_order, 'HH24') AS hour, SUM(amount_total) AS sales
 FROM pos_order
 GROUP BY user_id, TO_CHAR(date_order, 'HH24')
 ORDER BY user_id, hour;"
-Which users have the highest number of voided transactions?,"SELECT user_id, COUNT(*) AS voided_txns
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Which users have the highest number of voided transactions?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, COUNT(*) AS voided_txns
 FROM pos_order
 WHERE state = 'cancel'
 GROUP BY user_id
 ORDER BY voided_txns DESC;"
-List users who processed more than 100 orders in the last 30 days.,"SELECT user_id, COUNT(*) AS order_count
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+List users who processed more than 100 orders in the last 30 days.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, COUNT(*) AS order_count
 FROM pos_order
 WHERE date_order >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY user_id
 HAVING COUNT(*) > 100;"
-Show login activity of all users for the past week.,"SELECT id, login, last_login
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Show login activity of all users for the past week.
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT id, login, last_login
 FROM res_users
 WHERE last_login >= CURRENT_DATE - INTERVAL '7 days';"
-Who are the most efficient users based on average order processing time?,"SELECT user_id, AVG(EXTRACT(EPOCH FROM (validation_date_time - date_order))) AS avg_processing_time
+"You are an expert SQL developer.
+
+Convert the following natural language request into a single SQL SELECT query.
+Use only the schema provided below and do not make assumptions beyond it.
+
+only take table and field from given scheme no other is allowed
+
+Natural Language Request:
+Who are the most efficient users based on average order processing time?
+
+Database Schema:
+SCHEMA_PLACEHOLDER
+
+Return only the SQL query without explanation.","SELECT user_id, AVG(EXTRACT(EPOCH FROM (validation_date_time - date_order))) AS avg_processing_time
 FROM pos_order
 WHERE validation_date_time IS NOT NULL
 GROUP BY user_id
