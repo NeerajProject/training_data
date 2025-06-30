@@ -3556,7 +3556,7 @@ Use only the schema provided below and do not make assumptions beyond it.
 only take table and field from given scheme no other is allowed
 
 Natural Language Request:
-Which customers haven’t purchased anything in the last 90 days?
+Which customers havenï¿½t purchased anything in the last 90 days?
 
 Database Schema:
 CREATE TABLE pos_order (
@@ -6218,7 +6218,7 @@ Use only the schema provided below and do not make assumptions beyond it.
 only take table and field from given scheme no other is allowed
 
 Natural Language Request:
-Which users haven’t logged in for over a week?
+Which users havenï¿½t logged in for over a week?
 
 Database Schema:
 CREATE TABLE pos_order (
